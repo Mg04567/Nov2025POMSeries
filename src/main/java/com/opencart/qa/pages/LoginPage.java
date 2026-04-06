@@ -43,7 +43,7 @@ public class LoginPage {
 	//where we can mention the vallues of title and timeout
 	//Assert should be mentioned in the Test class.Hence we return title here and pass it to the Test Class
 	
-	@Step("getting login page title...")
+	@Step("getting login page title value...")
 	public String getLoginPageTitle() {
 						
 		String actTitle=eleutil.waitForTitleIs(AppConstants.LOGIN_PAGE_TITLE,AppConstants.SHORT_TIME_OUT );
