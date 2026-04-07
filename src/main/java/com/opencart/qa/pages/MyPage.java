@@ -8,4 +8,11 @@ String name="Tom";
 private void syso() {
 	System.out.println("hello page");
 }
+
+public void login() {
+	System.out.println("Hello login");
+	System.out.println("Hello login");
+	System.out.println("Hello login");
+	System.out.println("Hello login");
+}
 }
