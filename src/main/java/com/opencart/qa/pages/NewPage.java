@@ -1,6 +1,6 @@
 package com.opencart.qa.pages;
 
-public class DemoPage {
+public class NewPage {
 
 	int i=10;
 	
