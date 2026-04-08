@@ -4,11 +4,11 @@ public class MyPage {
 
 
 
-public void logout() {
-	System.out.println("Bye app");
-	System.out.println("Bye app");
-	System.out.println("Bye app");
-	System.out.println("Bye app");
+public void login() {
+	System.out.println("hello app");
+	System.out.println("hello app");
+	System.out.println("hello app");
+	System.out.println("hello app");
 }
 
 
