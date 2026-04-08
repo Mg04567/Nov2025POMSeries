@@ -2,8 +2,13 @@ package com.opencart.qa.pages;
 
 public class MyPage {
 
+int age=10;
 
-String browser="chrome";
+String name="Tom";
+private void syso() {
+	System.out.println("hello ");
+}
+
 
 public void login() {
 	System.out.println("Hello app");
