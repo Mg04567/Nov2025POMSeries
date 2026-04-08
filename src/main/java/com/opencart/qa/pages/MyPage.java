@@ -2,7 +2,7 @@ package com.opencart.qa.pages;
 
 public class MyPage {
 
-public void login() {
-	System.out.println("Hello login");
+public void logout() {
+	System.out.println("Hello logout");
 }
 }
