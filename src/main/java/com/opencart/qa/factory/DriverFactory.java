@@ -26,7 +26,12 @@ public class DriverFactory {
 	
 	
 public WebDriver initDriver(Properties prop) {         // Change to properties prop
-	String browsername=prop.getProperty("browser");			//declare broswername here of type String
+	String browsername=System.getProperty("browser");  //Here after configuration with JENKINS..we need to change the config from properites
+														//file to system.getproperty and the browser parameter is from JENKINS CHOOSE
+														//parameter file
+	 
+	
+	//String browsername=prop.getProperty("browser");			//declare broswername here of type String
 	System.out.println("Browser name is :"  +browsername);
 	
 	highlight=prop.getProperty("highlight");   		//highlight variable is assigned with the prop value here
