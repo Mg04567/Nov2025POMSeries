@@ -46,7 +46,7 @@ public class BaseTest{
 	//public void setup(@Optional("firefox") String browsername) {
 	public void setup(@Optional("chrome") String browsername) {	
 	df=new DriverFactory();
-		prop=df.initProp();
+		//prop=df.initProp();
 		
 		if (browsername!=null) {
 			prop.setProperty("browser", browsername);   //Here we are settig the value from config.prop browser to browsername
