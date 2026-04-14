@@ -119,7 +119,7 @@ pipeline
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             cleanWs()
             git branch: 'master', url: 'https://github.com/Mg04567/Nov2025POMSeries.git'
-            sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml -Denv=prod"
+            bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml -Denv=prod"
         }
     }
 }
