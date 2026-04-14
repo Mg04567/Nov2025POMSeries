@@ -107,7 +107,7 @@ public Properties initProp() {
 	prop=new Properties();     //Creating object of prop
 	
 	String envName=System.getProperty("env");            
-	System.out.println("Env is : "  +envName);
+	System.out.println("Env is : " +envName);
 	try {
 	if (envName==null) {
 		System.out.println("Env name is null , hence running the test cases in QA environment");
@@ -117,6 +117,7 @@ public Properties initProp() {
 	switch (envName.trim().toLowerCase()) {
 	case "qa":
 		fs=new FileInputStream("./src/test/resources/config/config.qa.properties");
+		
 		break;
 	case "dev":
 		fs=new FileInputStream("./src/test/resources/config/config.dev.properties");
