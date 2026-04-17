@@ -4,14 +4,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.bidi.module.Browser;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import com.opencart.qa.exceptions.BrowserException;
 import com.opencart.qa.exceptions.FrameworkException;
@@ -31,37 +35,70 @@ public WebDriver initDriver(Properties prop) {         // Change to properties p
 														//parameter file
 	 
 	
-	String browsername=prop.getProperty("browser");			//declare broswername here of type String
-	System.out.println("Browser name is :"  +browsername);
+	String browserName=prop.getProperty("browser");			//declare broswername here of type String
+	System.out.println("Browser name is :"  +browserName);
 	
 	highlight=prop.getProperty("highlight");   		//highlight variable is assigned with the prop value here
 	optionsManager=new OptionsManager(prop);
 	
-	
-	switch(browsername.trim().toLowerCase()) {
+	switch(browserName.trim().toLowerCase()) {
 	case "chrome":	
 		
-		tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+		//Write the logic here for remote driver configurations:
+		//remote value=true in config file..it is a string hence we need to typecast to boolean for if condition
+		
+		if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+			//run test cases on grid...we need to create an initialise remote driver method with cross browsing
+			//If remote flag is true testing will be done in remote machhine and if false itll run on local mcine
+			initRemoteDriver(browserName);
+		}
+		else 
+		{
+			//run test cases on local machine
+			tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+		}
+	//tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
 	// driver=new ChromeDriver(optionsManager.getChromeOptions());
 	     break;
+	     
 	case "firefox":
-		
-		tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
-		
+		if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+			//run test cases on grid...we need to create an initialise remote driver method with cross browsing
+			initRemoteDriver(browserName);
+		}
+		else 
+		{
+			//run test cases on local machine
+			tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
+		}
+		//tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
 		// driver=new FirefoxDriver(optionsManager.getFirefoxOptions());
 		 break;
+		 
+		 
 	case "edge":
-		tlDriver.set(new EdgeDriver(optionsManager.getEdgeOptions()));
+		if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+			//run test cases on grid...we need to create an initialise remote driver method with cross browsing
+			initRemoteDriver(browserName);
+		}
+		else 
+		{
+			//run test cases on local machine
+			tlDriver.set(new EdgeDriver(optionsManager.getEdgeOptions()));
+		}
 		
+		//tlDriver.set(new EdgeDriver(optionsManager.getEdgeOptions()));
 		// driver=new EdgeDriver(optionsManager.getEdgeOptions());
 		 break;
+		 
+		 //For safari only local execution...no remote execcution
 	case "safari":
 		tlDriver.set(new SafariDriver());
 		
 		// driver=new SafariDriver();
 		 break;
 		default:
-			System.out.println("===========Invalid Browser==========="  +browsername);
+			System.out.println("===========Invalid Browser==========="  +browserName);
 			throw new BrowserException("===========Invalid Browser===========");
 			}
 	
@@ -76,6 +113,34 @@ public WebDriver initDriver(Properties prop) {         // Change to properties p
 	getDriver().get(prop.getProperty("url"));                              //change url to hardcoded value from .properties file
 	
 	return getDriver();
+}
+
+
+/**
+ * this method will setup the RWD with hubURL and browser options ,it will supply the test bloks to the remote grid machine
+ * @param browsername
+ */
+
+private void initRemoteDriver(String browserName) {
+	System.out.println("Running the test cases on selenium grid:" +browserName );
+	try {
+	switch (browserName.trim().toLowerCase()) {
+	case "chrome":
+		tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getChromeOptions()));
+		break;
+	case "firefox":
+		tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getFirefoxOptions()));
+		break;
+	case "edge":
+		tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getEdgeOptions()));
+		break;
+	default:
+		System.out.println("Please supply the right browser name: " +browserName);
+		break;
+	}
+	}catch(MalformedURLException e) {
+		e.printStackTrace();
+	}
 }
 
 

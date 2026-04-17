@@ -18,7 +18,7 @@
 	</test>
 	
  	<test name="Home Page Test">
-		<parameter name="browser" value="chrome" />
+		<parameter name="browser" value="firefox" />
 		<classes>
 			<class name="com.opencart.qa.tests.HomePageTest" />
 		</classes>
@@ -32,7 +32,7 @@
 	</test>	
 	
 	<test name="Register Page Test">
-		<parameter name="browser" value="chrome" />
+		<parameter name="browser" value="firefox" />
 		<classes>
 			<class name="com.opencart.qa.tests.RegisterPageTest" />
 		</classes>
